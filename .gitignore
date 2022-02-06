@@ -1,0 +1,17 @@
+# npm
+/node_modules
+
+# dotenv
+/.env.development
+/.env.local
+/.env.preprod
+/.env.production
+
+# docker
+/docker-compose.override.yml
+
+# typescript
+/data/
+/dist/
+/*.sqlite
+oclif.manifest.json
