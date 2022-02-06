@@ -13,7 +13,7 @@ This project aims to track you crypto portfolio amongs various exchanges. That w
 - App : https://github.com/EtherbitHQ/donut
 - App : https://github.com/bitpay/wallet
 - Formule de plus ou moins value = prix de cession – ((prix total d’acquisition*prix de cession)/valeur du portefeuille)
-- Plateforme payante pour déclarer ses crypto monaies : https://koinly.io
+- Plateformes payantes pour déclarer ses crypto monaies : https://cointracking.info - https://koinly.io
 - Déclaration d'actifs numériques : https://github.com/pgrimaud/declaration-actifs-numeriques
 
 ## Export accounts procedure
