@@ -3,6 +3,8 @@ import { Controller, Get, Route } from "tsoa"
 import CryptoService from "../service/crypto-service"
 import Wallet from "../model/wallet"
 import RecordRepository from "../repository/record-repository"
+import * as CCXT from "ccxt"
+import { off } from "process"
 
 @Route("app")
 @Service()
@@ -24,16 +26,42 @@ class AppController extends Controller {
 
   @Get("wallets")
   public async wallets(): Promise<Object[]> {
+    const exchanges = [new CCXT.binance(), new CCXT.probit(), new CCXT.gateio()]
+    for(let i = 0; i < exchanges.length; i++) {
+      await exchanges[i].loadMarkets()
+    }
+
     let wallets = await this.cryptoService.getWallets()
     let obj: Object[] = []
 
-    wallets.forEach((wallet: Wallet) => {
+    for (let [key, wallet] of wallets) {
+      const detailCurrencies: any = {}
+      const currencies = wallet.getCurrencies()
+      for(let [currency, amount] of currencies) {
+        let price: number|undefined = undefined
+        for(let j = 0; j < exchanges.length; j++) {
+          const symbol = `${currency}/USDT`
+          if(!price && exchanges[j].markets[symbol]) {
+            let orderbook = await exchanges[j].fetchOrderBook(symbol)
+            let bid = orderbook.bids.length ? orderbook.bids[0][0] : undefined
+            let ask = orderbook.asks.length ? orderbook.asks[0][0] : undefined
+            if(bid && ask) {
+              price = (bid + ask) / 2
+            }
+          }
+        }
+        detailCurrencies[currency] = {
+          usdValue: price ? amount * price : undefined,
+          value: amount
+        }
+      }
+
       obj.push({
         exchange: wallet.getExchange(),
         address: wallet.getAddress(),
-        currencies: Object.fromEntries(wallet.getCurrencies())
+        currencies: detailCurrencies
       })
-    })
+    }
 
     return obj
   }
