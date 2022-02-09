@@ -8,6 +8,7 @@ import BinanceExchange from "./service/exchange/binance-exchange"
 import ProbitExchange from "./service/exchange/probit-exchange"
 import PresearchExchange from "./service/exchange/presearch-exchange"
 import CoinmetroExchange from "./service/exchange/coinmetro-exchange"
+import ZelcoreExchange from "./service/exchange/zelcore-exchange"
 
 export default class Container implements IocContainer {
   constructor(protected init: boolean = false) {}
@@ -28,7 +29,8 @@ export default class Container implements IocContainer {
         BinanceExchange,
         ProbitExchange,
         PresearchExchange,
-        CoinmetroExchange
+        CoinmetroExchange,
+        ZelcoreExchange
       ])
 
       // typedi + typeorm

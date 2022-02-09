@@ -1,8 +1,15 @@
 export default class Wallet {
   private currencies: Map<string, number>
 
-  constructor(private address: string) {
+  constructor(
+    private exchange: string,
+    private address: string
+  ) {
     this.currencies = new Map<string, number>()
+  }
+
+  public getExchange(): string {
+    return this.exchange
   }
 
   public getAddress(): string {

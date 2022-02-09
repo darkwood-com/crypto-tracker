@@ -29,6 +29,7 @@ class AppController extends Controller {
 
     wallets.forEach((wallet: Wallet) => {
       obj.push({
+        exchange: wallet.getExchange(),
         address: wallet.getAddress(),
         currencies: Object.fromEntries(wallet.getCurrencies())
       })

@@ -71,7 +71,7 @@ export default class CryptoService {
 
       let wallet = wallets.get(record.address)
       if(!wallet) {
-        wallet = new Wallet(record.address)
+        wallet = new Wallet(record.exchange, record.address)
         wallets.set(record.address, wallet)
       }
 

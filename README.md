@@ -34,6 +34,7 @@ download deposit and withdrawal csv : https://www.probit.com/en-us/user-center/h
 download trade history csv : https://www.probit.com/en-us/user-center/history/trade
 - presearch : download export file from : https://keywords.presearch.org/account/tokens/savings
 - coinmetro : download transaction history from dashboard : https://go.coinmetro.com/dashboard
+- zelcore : there is an export button on each of your assets details. This should done for each assets.
 
 ## Import files
 
