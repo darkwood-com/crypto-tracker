@@ -33,23 +33,25 @@ class AppController extends Controller {
 
     let wallets = await this.cryptoService.getWallets()
     let obj: Object[] = []
+    let prices: any = {}
 
     for (let [key, wallet] of wallets) {
       const detailCurrencies: any = {}
       const currencies = wallet.getCurrencies()
       for(let [currency, amount] of currencies) {
-        let price: number|undefined = undefined
+        const symbol = `${currency}/USDT`
         for(let j = 0; j < exchanges.length; j++) {
-          const symbol = `${currency}/USDT`
-          if(!price && exchanges[j].markets[symbol]) {
+          if(!prices[symbol] && exchanges[j].markets[symbol]) {
             let orderbook = await exchanges[j].fetchOrderBook(symbol)
             let bid = orderbook.bids.length ? orderbook.bids[0][0] : undefined
             let ask = orderbook.asks.length ? orderbook.asks[0][0] : undefined
             if(bid && ask) {
-              price = (bid + ask) / 2
+              prices[symbol] = (bid + ask) / 2
             }
           }
         }
+        
+        let price: number|undefined = prices[symbol]
         detailCurrencies[currency] = {
           usdValue: price ? amount * price : undefined,
           value: amount
